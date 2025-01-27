@@ -5,6 +5,11 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
+    public function navigationItems(): array
+    {
+       return config('navigation');
+    }
+
     /**
      * Log the current user out of the application.
      */
@@ -30,9 +35,11 @@ new class extends Component
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @foreach($this->navigationItems() as $item)
+                        <x-nav-link :href="route($item['route'])" :active="request()->routeIs($item['route'])" wire:navigate>
+                            {{ __($item['display_name']) }}
+                        </x-nav-link>
+                    @endforeach
                 </div>
             </div>
 
@@ -81,9 +88,11 @@ new class extends Component
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @foreach($this->navigationItems() as $item)
+                <x-responsive-nav-link :href="route($item['route'])" :active="request()->routeIs($item['route'])" wire:navigate>
+                    {{ __($item['display_name']) }}
+                </x-responsive-nav-link>
+            @endforeach
         </div>
 
         <!-- Responsive Settings Options -->
