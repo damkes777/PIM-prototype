@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
@@ -20,11 +21,22 @@ class Category extends Model
     protected $fillable = [
         '_lft',
         '_rgt',
-        'parent_id'
+        'parent_id',
     ];
 
     public function names(): HasMany
     {
         return $this->hasMany(CategoryName::class, 'category_id', 'id');
+    }
+
+    public function englishName(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $categoryName = $this->names()
+                                 ->where(['language' => 'en'])
+                                 ->first();
+
+            return $categoryName->name;
+        });
     }
 }

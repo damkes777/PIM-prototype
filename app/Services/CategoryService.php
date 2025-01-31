@@ -21,4 +21,17 @@ class CategoryService
             return $category;
         });
     }
+
+    public function findCategory(int $id): Category
+    {
+        return Category::query()
+                       ->findOrFail($id);
+    }
+
+    public function getParent(int $id, string $language = 'en'): string|null
+    {
+        $category = $this->findCategory($id);
+
+        return $category->getParentId();
+    }
 }
