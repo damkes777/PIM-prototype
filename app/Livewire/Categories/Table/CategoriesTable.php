@@ -7,7 +7,6 @@ use App\Services\CategoryService;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LivewireComponentColumn;
 
 class CategoriesTable extends DataTableComponent
 {
@@ -34,21 +33,33 @@ class CategoriesTable extends DataTableComponent
                       })),
             Column::make(__('Parent'))
                   ->label(fn($row, Column $column) => $this->getCategoryParent($row->id)),
-            LivewireComponentColumn::make(__('Actions'), 'id')
-                                   ->component('categories.table.categories-table-actions'),
+            Column::make(__('Actions'), 'id')
+                  ->view('livewire.category.table.actions'),
         ];
     }
 
     private function getCategoryParent(int $id): string
     {
-        $service = new CategoryService();
+        $service = app(CategoryService::class);
         $parent  = $service->getParent($id);
 
         return $parent ? $parent->english_name : __('N/A');
     }
 
-    private function getCategoryPath(int $id): string
+    public function createChildren(int $parentId): void
     {
-        return '';
+        $this->dispatch('openModal', component: 'modals.create-category-child-modal', arguments: [
+            'parentId' => $parentId,
+        ]);
+    }
+
+    public function edit(int $id): void
+    {
+
+    }
+
+    public function delete(int $edit): void
+    {
+
     }
 }

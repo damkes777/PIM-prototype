@@ -2,16 +2,16 @@
 
 namespace App\Livewire\Modals;
 
-use App\Livewire\Forms\CategoryForm;
 use App\Services\CategoryService;
-use Illuminate\View\View;
-use LivewireUI\Modal\ModalComponent;
 
-class CreateCategoryModal extends AbstractCategoryFormModal
+class CreateCategoryChildModal extends AbstractCategoryFormModal
 {
+    public int $parentId;
+
     public function save(CategoryService $service): void
     {
-        $category = $this->form->createCategory($service);
+        $this->form->category = $service->findCategory($this->parentId);
+        $category             = $this->form->createChildren($service);
 
         if ($category->exists) {
             $this->dispatch('closeModal');

@@ -1,3 +1,3 @@
 <x-secondary-button wire:click="$dispatch('openModal', { component: 'modals.create-category-modal' })">
-    Create
+    {{ __('Create') }}
 </x-secondary-button>

@@ -22,16 +22,32 @@ class CategoryService
         });
     }
 
+    public function createChild(Category $parent, array $names): Category
+    {
+        return DB::transaction(function () use ($parent, $names) {
+            $category = Category::create(['parent_id' => $parent->id]);
+            $category->names()
+                     ->createMany($names);
+
+            return $category;
+        });
+    }
+
     public function findCategory(int $id): Category
     {
         return Category::query()
                        ->findOrFail($id);
     }
 
-    public function getParent(int $id, string $language = 'en'): string|null
+    public function getParent(int $id): Category|null
     {
         $category = $this->findCategory($id);
+        $parentId = $category->getParentId();
 
-        return $category->getParentId();
+        if ($parentId) {
+            return $this->findCategory($parentId);
+        }
+
+        return null;
     }
 }

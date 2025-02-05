@@ -10,17 +10,30 @@ use Livewire\Form;
 
 class CategoryForm extends Form
 {
+    public ?Category $category;
+
     #[Validate('required|string|min:2')]
     public $name;
 
-    public function store(CategoryService $service): Category
+    public function createCategory(CategoryService $service): Category
     {
         $this->validate();
 
         $names = [
-            ['language' => App::getLocale(), 'name' => $this->name],
+            ['language' => 'en', 'name' => $this->name],
         ];
 
         return $service->create($names);
+    }
+
+    public function createChildren(CategoryService $service): Category
+    {
+        $this->validate();
+
+        $names = [
+            ['language' => 'en', 'name' => $this->name],
+        ];
+
+        return $service->createChild($this->category, $names);
     }
 }

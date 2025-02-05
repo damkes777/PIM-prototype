@@ -11,7 +11,7 @@
         <x-secondary-button wire:click="dispatch('closeModal')">
             {{ __('Cancel') }}
         </x-secondary-button>
-        <x-primary-button wire:click="createCategory">
+        <x-primary-button wire:click="save">
             {{ __('Save') }}
         </x-primary-button>
     </x-slot:buttons>
