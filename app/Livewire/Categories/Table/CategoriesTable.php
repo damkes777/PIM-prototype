@@ -33,9 +33,25 @@ class CategoriesTable extends DataTableComponent
                       })),
             Column::make(__('Parent'))
                   ->label(fn($row, Column $column) => $this->getCategoryParent($row->id)),
+            Column::make(__('Path'))
+                  ->label(fn($row, Column $column) => $this->getCategoryPath($row->id)),
             Column::make(__('Actions'), 'id')
                   ->view('livewire.category.table.actions'),
         ];
+    }
+
+    private function getCategoryPath(int $id): string
+    {
+        $service  = app(CategoryService::class);
+        $category = $service->findCategory($id);
+        $path     = $category->english_name;
+
+        while ($category->parent_id !== null) {
+            $category = $service->findCategory($category->parent_id);
+            $path     = $category->english_name . '/' . $path;
+        }
+
+        return $path;
     }
 
     private function getCategoryParent(int $id): string
