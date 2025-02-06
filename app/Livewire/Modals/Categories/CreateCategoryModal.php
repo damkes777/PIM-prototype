@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Livewire\Modals;
+namespace App\Livewire\Modals\Categories;
 
-use App\Livewire\Forms\CategoryForm;
 use App\Services\CategoryService;
-use Illuminate\View\View;
-use LivewireUI\Modal\ModalComponent;
 
 class CreateCategoryModal extends AbstractCategoryFormModal
 {

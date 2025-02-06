@@ -25,13 +25,15 @@ class CategoriesTable extends DataTableComponent
         return [
             Column::make(__('ID'), 'id')
                   ->sortable(),
-            Column::make(__('Name'))
+            Column::make(__('Primary name (en)'))
                   ->label(fn($row, Column $column) => $row->english_name)
                   ->searchable(fn(Builder $query, $searchTrem) => $query->whereHas('names',
                       function (Builder $innerQuery) use ($searchTrem) {
                           $innerQuery->where('language', '=', 'en')
                                      ->where('name', 'like', "%$searchTrem%");
                       })),
+            Column::make('Names', 'id')
+                  ->view('livewire.category.table.names'),
             Column::make(__('Parent'))
                   ->label(fn($row, Column $column) => $this->getCategoryParent($row->id)),
             Column::make(__('Path'))
@@ -65,14 +67,9 @@ class CategoriesTable extends DataTableComponent
 
     public function createChildren(int $parentId): void
     {
-        $this->dispatch('openModal', component: 'modals.create-category-child-modal', arguments: [
+        $this->dispatch('openModal', component: 'modals.categories.create-category-child-modal', arguments: [
             'parentId' => $parentId,
         ]);
-    }
-
-    public function edit(int $id): void
-    {
-
     }
 
     public function delete(int $id): void
@@ -82,7 +79,7 @@ class CategoriesTable extends DataTableComponent
 
         if ($category->children()
                      ->exists()) {
-            $this->dispatch('openModal', component: 'modals.category-delete-modal', arguments: [
+            $this->dispatch('openModal', component: 'modals.categories.category-delete-modal', arguments: [
                 'title' => 'title',
                 'content' => 'content',
                 'event' => 'delete-category',

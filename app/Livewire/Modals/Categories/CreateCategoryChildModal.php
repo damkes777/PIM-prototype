@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Modals;
+namespace App\Livewire\Modals\Categories;
 
 use App\Services\CategoryService;
 
