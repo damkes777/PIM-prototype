@@ -5,7 +5,7 @@
     <x-secondary-button>
         {{ __('edit') }}
     </x-secondary-button>
-    <x-secondary-button>
+    <x-secondary-button wire:click="delete({{ $value }})">
         {{ __('delete') }}
     </x-secondary-button>
 </div>

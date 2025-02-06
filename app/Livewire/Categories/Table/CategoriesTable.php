@@ -5,6 +5,7 @@ namespace App\Livewire\Categories\Table;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\On;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -74,8 +75,30 @@ class CategoriesTable extends DataTableComponent
 
     }
 
-    public function delete(int $edit): void
+    public function delete(int $id): void
     {
+        $service  = app(CategoryService::class);
+        $category = $service->findCategory($id);
 
+        if ($category->children()
+                     ->exists()) {
+            $this->dispatch('openModal', component: 'modals.category-delete-modal', arguments: [
+                'title' => 'title',
+                'content' => 'content',
+                'event' => 'delete-category',
+                'categoryId' => $id,
+            ]);
+        } else {
+            $this->dispatch('delete-category', id: $id);
+        }
+    }
+
+    #[On('delete-category')]
+    public function deleteCategory(int $id): void
+    {
+        $service = app(CategoryService::class);
+        $service->delete($id);
+
+        $this->dispatch('refresh');
     }
 }

@@ -33,6 +33,12 @@ class CategoryService
         });
     }
 
+    public function delete(int $id): void
+    {
+        $category = $this->findCategory($id);
+        $category->delete();
+    }
+
     public function findCategory(int $id): Category
     {
         return Category::query()
