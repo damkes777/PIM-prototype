@@ -90,6 +90,12 @@ class CategoriesTable extends DataTableComponent
         }
     }
 
+    public function openCategoryNamesModal(int $id): void
+    {
+        $this->dispatch('openModal', component: 'modals.category-names.category-names-modal',
+            arguments: ['categoryId' => $id]);
+    }
+
     #[On('delete-category')]
     public function deleteCategory(int $id): void
     {

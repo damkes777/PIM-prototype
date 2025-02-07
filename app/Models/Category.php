@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Kalnoy\Nestedset\NodeTrait;
 
 /**
@@ -12,7 +13,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int _lft
  * @property int _rgt
  * @property int parent_id
- * @property CategoryName[] $names
+ * @property Collection $names
  */
 class Category extends Model
 {
