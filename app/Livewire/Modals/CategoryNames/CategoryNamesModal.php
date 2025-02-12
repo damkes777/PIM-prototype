@@ -2,15 +2,21 @@
 
 namespace App\Livewire\Modals\CategoryNames;
 
-use App\Services\CategoryNamesService;
-use Illuminate\Support\Collection;
+use App\Livewire\Forms\CategoryNamesForm;
+use App\Models\Category;
 use Illuminate\View\View;
-use Livewire\Attributes\Computed;
 use LivewireUI\Modal\ModalComponent;
 
 class CategoryNamesModal extends ModalComponent
 {
-    public int $categoryId;
+    public CategoryNamesForm $form;
+
+    public function mount(int $categoryId): void
+    {
+        $this->form->category = Category::with('names')
+                                        ->find($categoryId);
+        $this->form->setData();
+    }
 
     public function render(): View
     {
@@ -24,11 +30,14 @@ class CategoryNamesModal extends ModalComponent
         return $name->name ?? null;
     }
 
-    #[Computed]
-    public function names(): Collection
+    public function save(): void
     {
-        $service = app(CategoryNamesService::class);
+        try {
+            $this->form->create();
+            $this->dispatch('closeModal');
+        } catch (\Exception $exception) {
 
-        return $service->getNames($this->categoryId);
+        }
     }
+
 }

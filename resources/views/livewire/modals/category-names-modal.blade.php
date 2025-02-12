@@ -4,17 +4,20 @@
             {{ __('Category names') }}
         </x-slot:title>
         <div class="flex flex-col w-full gap-3">
+
             @foreach(\App\Enums\Languages::cases() as $language)
                 <div class="inline-flex flex-col px-5">
                     <x-input-label>{{ $language->isoName() }}</x-input-label>
                     <template x-if="edit">
-                        <x-text-input value="{{ $this->getCategoryName($language->isoCode()) }}"/>
+                        <x-text-input wire:model="form.names.{{$language->isoCode()}}"/>
                     </template>
                     <template x-if="!edit">
-                        <x-text-input value="{{ $this->getCategoryName($language->isoCode()) }}" disabled/>
+                        <x-text-input wire:model="form.names.{{$language->isoCode()}}" disabled/>
                     </template>
+                    <x-input-error class="mt-2" :messages="$errors->get('form.names' . $language->isoCode())"/>
                 </div>
             @endforeach
+
             <div class="px-5">
                 <x-primary-button @click="edit =! edit">{{ __('Edit') }}</x-primary-button>
                 <x-secondary-button x-show="edit">{{ __('Translate') }}</x-secondary-button>
@@ -24,7 +27,7 @@
             <x-secondary-button x-show="edit">
                 {{ __('Cancel') }}
             </x-secondary-button>
-            <x-primary-button x-show="edit">
+            <x-primary-button wire:click="save" x-show="edit">
                 {{ __('Save') }}
             </x-primary-button>
         </div>
