@@ -4,6 +4,7 @@ namespace App\Livewire\Modals\CategoryNames;
 
 use App\Livewire\Forms\CategoryNamesForm;
 use App\Models\Category;
+use App\Services\TranslateServices\TranslateCategoryNamesService;
 use Illuminate\View\View;
 use LivewireUI\Modal\ModalComponent;
 
@@ -40,4 +41,15 @@ class CategoryNamesModal extends ModalComponent
         }
     }
 
+    public function translate(TranslateCategoryNamesService $service): void
+    {
+        foreach (array_keys($this->form->names) as $language) {
+            if ($language === 'en') {
+                continue;
+            }
+
+            $englishName                  = $this->form->names['en'];
+            $this->form->names[$language] = $service->translate($englishName, $language);
+        }
+    }
 }

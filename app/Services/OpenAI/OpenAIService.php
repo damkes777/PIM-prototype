@@ -30,16 +30,16 @@ class OpenAIService
      * @throws JsonException
      */
     public function executeRequest(
-        array $messages,
-        array $responseFormat,
+        array $message,
+        array $schema,
         string $model = 'gpt-4o-mini',
     ): OpenAIResponse {
         $response = $this->client->post('', [
             'headers' => $this->headers,
             'json' => [
                 'model' => $model,
-                'messages' => $messages,
-                'response_format' => $responseFormat,
+                'messages' => $message,
+                'response_format' => $schema,
             ],
         ]);
 

@@ -20,7 +20,7 @@
 
             <div class="px-5">
                 <x-primary-button @click="edit =! edit">{{ __('Edit') }}</x-primary-button>
-                <x-secondary-button x-show="edit">{{ __('Translate') }}</x-secondary-button>
+                <x-secondary-button x-show="edit" wire:click="translate">{{ __('Translate') }}</x-secondary-button>
             </div>
         </div>
         <div class="flex flex-row-reverse gap-2 pt-5">
