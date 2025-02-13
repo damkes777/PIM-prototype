@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
-class CategoryController extends Controller
+class ParameterController extends Controller
 {
     public function list(): View
     {
-        return view('category.index');
+        return view('parameter.index');
     }
 }

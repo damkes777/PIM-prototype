@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ParameterController;
 
 Route::middleware(['auth'])
      ->group(function () {
@@ -16,6 +17,13 @@ Route::middleware(['auth'])
               ->group(function () {
                   Route::get('/', 'list')
                        ->name('category.list');
+              });
+
+         Route::controller(ParameterController::class)
+              ->prefix('parameter')
+              ->group(function () {
+                  Route::get('/', 'list')
+                       ->name('parameter.name');
               });
      });
 
