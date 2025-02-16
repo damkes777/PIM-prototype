@@ -10,4 +10,9 @@ class ParameterController extends Controller
     {
         return view('parameter.index');
     }
+
+    public function create(): View
+    {
+        return view('parameter.create');
+    }
 }

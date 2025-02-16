@@ -13,17 +13,19 @@ Route::middleware(['auth'])
               ->name('profile');
 
          Route::controller(CategoryController::class)
-              ->prefix('category')
+              ->prefix('categories')
               ->group(function () {
                   Route::get('/', 'list')
-                       ->name('category.list');
+                       ->name('categories.list');
               });
 
          Route::controller(ParameterController::class)
-              ->prefix('parameter')
+              ->prefix('parameters')
               ->group(function () {
                   Route::get('/', 'list')
-                       ->name('parameter.name');
+                       ->name('parameters.name');
+                  Route::get('/create', 'create')
+                       ->name('parameters.create');
               });
      });
 

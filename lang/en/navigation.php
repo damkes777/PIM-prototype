@@ -3,5 +3,8 @@
 return [
     'dashboard' => 'Dashboard',
     'categories' => 'Categories',
-    'parameters' => 'Parameters',
+    'parameters' => [
+        'index' => 'Parameters',
+        'create' => 'Parameter create',
+    ],
 ];
