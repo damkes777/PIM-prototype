@@ -8,7 +8,7 @@ class ParameterController extends Controller
 {
     public function list(): View
     {
-        return view('parameter.index');
+        return view('parameter.list');
     }
 
     public function create(): View

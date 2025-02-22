@@ -1,6 +1,6 @@
 <div>
     <div class="flex p-2 justify-between bg-zinc-200/50">
-        <h2 class="p-1 ml-2 text-center text-lg font-medium text-zinc-600">
+        <h2 class="p-1 ml-2 text-center font-medium text-zinc-600">
             {{ $title ?? '' }}
         </h2>
         <button wire:click="dispatch('closeModal')"

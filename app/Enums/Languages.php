@@ -28,4 +28,15 @@ enum Languages
             self::RUSSIAN => 'ru'
         };
     }
+
+    public static function getFromIsoCode(string $isoCode): ?self
+    {
+        return match ($isoCode) {
+            'en' => self::ENGLISH,
+            'de' => self::GERMANY,
+            'pl' => self::POLISH,
+            'ru' => self::RUSSIAN,
+            default => null
+        };
+    }
 }
