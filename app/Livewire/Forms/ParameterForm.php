@@ -14,21 +14,28 @@ class ParameterForm extends Form
         'parameterNames.en' => 'required',
         'parameterNames.*' => 'nullable|string',
     ])]
-    public $parameterNames;
+    public $parameterNames = [];
 
     #[Validate([
         'valueNames' => 'array|nullable',
     ])]
     public $valueNames = [[]];
 
-    public function create()
+    public function create(): void
     {
-        DB::transaction(function () {
-            $parameter = Parameter::query()
-                                  ->create();
-            $parameter->names()
-                      ->create($this->parameterNames);
-        });
+        $this->validate();
+        dd($this->valueNames);
+
+        try {
+            DB::transaction(function () {
+                $parameter = Parameter::query()
+                                      ->create();
+                $parameter->names()
+                          ->create($this->parameterNames);
+            });
+        } catch (\Exception $exception) {
+
+        }
     }
 
     public function update()

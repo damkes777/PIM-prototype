@@ -16,6 +16,11 @@ class ParameterCreate extends Component
         return view('livewire.parameters.create');
     }
 
+    public function save(): void
+    {
+        $this->form->create();
+    }
+
     public function isEnglishLanguage(string $isoCode): bool
     {
         $english = Languages::ENGLISH;
@@ -26,5 +31,14 @@ class ParameterCreate extends Component
     public function addParameterValue(): void
     {
         $this->form->valueNames[] = [];
+    }
+
+    public function translateParameterNames(): void
+    {
+        //
+    }
+    public function translateValueNames(): void
+    {
+        //
     }
 }

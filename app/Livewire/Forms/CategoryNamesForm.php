@@ -4,7 +4,6 @@ namespace App\Livewire\Forms;
 
 use App\Enums\Languages;
 use App\Models\Category;
-use App\Services\CategoryNamesService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
