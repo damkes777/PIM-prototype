@@ -23,7 +23,7 @@ Route::middleware(['auth'])
               ->prefix('parameters')
               ->group(function () {
                   Route::get('/', 'list')
-                       ->name('parameters.name');
+                       ->name('parameters.list');
                   Route::get('/create', 'create')
                        ->name('parameters.create');
               });
