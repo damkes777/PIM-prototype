@@ -6,7 +6,7 @@ use App\Contracts\Translatable;
 use App\Services\OpenAI\OpenAIService;
 use GuzzleHttp\Exception\GuzzleException;
 
-class TranslateCategoryNamesService implements Translatable
+class TranslateService implements Translatable
 {
     private const SYSTEM_PROMPT = 'You translate the given word into the following language: ';
     private const USER_PROMPT = 'Translate the word: ';

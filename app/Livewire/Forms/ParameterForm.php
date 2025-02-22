@@ -24,7 +24,6 @@ class ParameterForm extends Form
     public function create(): void
     {
         $this->validate();
-        dd($this->valueNames);
 
         try {
             DB::transaction(function () {

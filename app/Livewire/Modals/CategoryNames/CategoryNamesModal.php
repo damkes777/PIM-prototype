@@ -4,7 +4,8 @@ namespace App\Livewire\Modals\CategoryNames;
 
 use App\Livewire\Forms\CategoryNamesForm;
 use App\Models\Category;
-use App\Services\TranslateServices\TranslateCategoryNamesService;
+use App\Services\TranslateServices\TranslateService;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\View\View;
 use LivewireUI\Modal\ModalComponent;
 
@@ -41,15 +42,16 @@ class CategoryNamesModal extends ModalComponent
         }
     }
 
-    public function translate(TranslateCategoryNamesService $service): void
+    /**
+     * @throws GuzzleException
+     */
+    public function translate(TranslateService $service): void
     {
         foreach (array_keys($this->form->names) as $language) {
-            if ($language === 'en') {
-                continue;
+            if ($language !== 'en') {
+                $englishName                  = $this->form->names['en'];
+                $this->form->names[$language] = $service->translate($englishName, $language);
             }
-
-            $englishName                  = $this->form->names['en'];
-            $this->form->names[$language] = $service->translate($englishName, $language);
         }
     }
 }
