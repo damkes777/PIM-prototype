@@ -4,12 +4,22 @@ namespace App\Livewire\Parameters;
 
 use App\Enums\Languages;
 use App\Livewire\Forms\ParameterForm;
+use App\Services\TranslateServices\TranslateService;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class ParameterCreate extends Component
 {
     public ParameterForm $form;
+
+    public function mount(): void
+    {
+        foreach (Languages::cases() as $language) {
+            $this->form->parameterNames[$language->isoCode()] = '';
+            $this->form->valueNames[0][$language->isoCode()]  = '';
+        }
+    }
 
     public function render(): View
     {
@@ -33,12 +43,34 @@ class ParameterCreate extends Component
         $this->form->valueNames[] = [];
     }
 
-    public function translateParameterNames(): void
+    /**
+     * @throws GuzzleException
+     */
+    public function translateParameterNames(TranslateService $service): void
     {
-        //
+        foreach (array_keys($this->form->parameterNames) as $language) {
+            if ($language !== 'en') {
+                $englishName                           = $this->form->parameterNames['en'];
+                $this->form->parameterNames[$language] = $service->translate($englishName, $language);
+            }
+        }
     }
-    public function translateValueNames(): void
+
+    /**
+     * @throws GuzzleException
+     */
+    public function translateValueNames(int $key): void
     {
-        //
+        $service = app(TranslateService::class);
+        $values  = $this->form->valueNames[$key];
+
+        foreach (array_keys($values) as $language) {
+            if ($language !== 'en') {
+                $englishName       = $values['en'];
+                $values[$language] = $service->translate($englishName, $language);
+            }
+        }
+
+        $this->form->valueNames[$key] = $values;
     }
 }

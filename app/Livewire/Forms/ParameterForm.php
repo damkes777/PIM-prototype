@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Enums\Languages;
 use App\Models\Parameter;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;

@@ -19,10 +19,13 @@
                             <x-input-error :messages="$errors->get('form.parameterNames.' . $language->isoCode())"/>
                         </div>
                     @endforeach
-                    <div>
-                        <x-primary-button wire:click="transpateParameterNames">
+                    <div class="flex">
+                        <x-primary-button wire:click="translateParameterNames()">
                             {{ __('Translate') }}
                         </x-primary-button>
+                        <div class="flex justify-center items-center ml-3 gap-2" wire:loading wire:target="translateParameterNames">
+                            <i class="fa-solid fa-spinner animate-spin"></i> {{ __('Translation...') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,10 +68,13 @@
                                                 :messages="$errors->get('form.valueNames.'. $key . $language->isoCode())"/>
                                     </div>
                                 @endforeach
-                                <div>
-                                    <x-primary-button wire:click="translate({{ $key }})">
+                                <div class="flex">
+                                    <x-primary-button wire:click="translateValueNames({{ $key }})">
                                         {{ __('Translate') }}
                                     </x-primary-button>
+                                    <div class="flex justify-center items-center ml-3 gap-2" wire:loading wire:target="translateValueNames">
+                                        <i class="fa-solid fa-spinner animate-spin"></i> {{ __('Translation...') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
