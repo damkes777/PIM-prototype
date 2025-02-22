@@ -27,8 +27,8 @@ class ParameterForm extends Form
         $this->validate();
 
         try {
-          $this->createParameterWithNames();
-          $this->createValuesWithNames();
+            $parameter = $this->createParameterWithNames();
+            $this->createValuesWithNames($parameter);
         } catch (\Exception $exception) {
             dd($exception->getMessage());
         }
@@ -39,9 +39,9 @@ class ParameterForm extends Form
 
     }
 
-    private function createParameterWithNames(): void
+    private function createParameterWithNames(): Parameter
     {
-        DB::transaction(function () {
+        return DB::transaction(function () {
             $parameter = Parameter::query()
                                   ->create();
 
@@ -52,21 +52,25 @@ class ParameterForm extends Form
 
             $parameter->names()
                       ->createMany($names);
+
+            return $parameter;
         });
     }
 
-    private function createValuesWithNames(): void
+    private function createValuesWithNames(Parameter $parameter): void
     {
-        DB::transaction(function () {
+        DB::transaction(function () use ($parameter) {
             foreach ($this->valueNames as $valueName) {
-                $value = ParameterValue::query()->create();
+                $value = ParameterValue::query()
+                                       ->create(['parameter_id' => $parameter->id]);
 
                 $names = [];
                 foreach ($valueName as $language => $name) {
                     $names[] = ['language' => $language, 'name' => $name];
                 }
 
-                $value->names()->createMany($names);
+                $value->names()
+                      ->createMany($names);
             }
         });
     }

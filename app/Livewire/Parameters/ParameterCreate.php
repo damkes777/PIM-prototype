@@ -29,6 +29,7 @@ class ParameterCreate extends Component
     public function save(): void
     {
         $this->form->create();
+        $this->redirectRoute('parameters.list');
     }
 
     public function isEnglishLanguage(string $isoCode): bool
