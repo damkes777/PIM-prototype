@@ -14,6 +14,7 @@ class ParametersTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setConfigurableArea('toolbar-left-end', 'livewire.parameters.table.create-button');
     }
 
     public function columns(): array
@@ -31,6 +32,10 @@ class ParametersTable extends DataTableComponent
                   })),
             Column::make(__('Names'), 'id')
                   ->view('livewire.parameters.table.names'),
+            Column::make(__('Values'), 'id')
+                  ->view('livewire.parameters.table.values'),
+            Column::make(__('Actions'), 'id')
+                  ->view('livewire.parameters.table.actions'),
         ];
     }
 
@@ -39,5 +44,17 @@ class ParametersTable extends DataTableComponent
         $this->dispatch('openModal', component: 'modals.parameters.parameter-names-modal', arguments: [
             'parameterId' => $parameterId,
         ]);
+    }
+
+    public function openParameterValuesModal(int $parameterId): void
+    {
+        $this->dispatch('openModal', component: 'modals.parameters.parameter-values-modal', arguments: [
+            'parameterId' => $parameterId,
+        ]);
+    }
+
+    public function createParameter(): void
+    {
+        $this->redirectRoute('parameters.create');
     }
 }

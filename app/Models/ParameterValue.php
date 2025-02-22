@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,5 +26,16 @@ class ParameterValue extends Model
     public function names(): HasMany
     {
         return $this->hasMany(ParameterValueName::class, 'parameter_value_id', 'id');
+    }
+
+    public function englishName(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $valueName = $this->names()
+                              ->where(['language' => 'en'])
+                              ->first();
+
+            return $valueName->name;
+        });
     }
 }
