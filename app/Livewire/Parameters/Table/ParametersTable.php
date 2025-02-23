@@ -4,6 +4,7 @@ namespace App\Livewire\Parameters\Table;
 
 use App\Models\Parameter;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\On;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -56,5 +57,28 @@ class ParametersTable extends DataTableComponent
     public function createParameter(): void
     {
         $this->redirectRoute('parameters.create');
+    }
+
+    public function delete(int $parameterId): void
+    {
+        $parameter = Parameter::query()
+                              ->with('values')
+                              ->find($parameterId);
+
+        if ($parameter->values()
+                      ->exists()) {
+            $this->dispatch('openModal', component: 'modals.parameters.parameter-delete-modal',
+                arguments: ['parameterId' => $parameterId]);
+        } else {
+            $parameter->delete();
+        }
+    }
+
+    #[On('delete-parameter')]
+    public function deleteParameter(int $parameterId): void
+    {
+        Parameter::query()
+                 ->find($parameterId)
+                 ->delete();
     }
 }

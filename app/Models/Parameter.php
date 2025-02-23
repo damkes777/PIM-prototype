@@ -20,6 +20,11 @@ class Parameter extends Model
         return $this->hasMany(ParameterName::class, 'parameter_id', 'id');
     }
 
+    public function values(): HasMany
+    {
+        return $this->hasMany(ParameterValue::class, 'parameter_id', 'id');
+    }
+
     public function englishName(): Attribute
     {
         return Attribute::make(get: function () {
