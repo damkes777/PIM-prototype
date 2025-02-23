@@ -80,9 +80,6 @@ class CategoriesTable extends DataTableComponent
         if ($category->children()
                      ->exists()) {
             $this->dispatch('openModal', component: 'modals.categories.category-delete-modal', arguments: [
-                'title' => 'title',
-                'content' => 'content',
-                'event' => 'delete-category',
                 'categoryId' => $id,
             ]);
         } else {
