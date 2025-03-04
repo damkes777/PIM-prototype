@@ -3,7 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Parameter;
-use App\Models\ParameterValue;
+use App\Services\ParameterService;
+use App\Services\ParameterValuesService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -20,25 +21,28 @@ class ParameterForm extends Form
     ])]
     public $parameterNames = [];
 
-    #[Validate(['array|nullable'])]
-    public $parameterValues = [
-        [
-            "id" => null,
-            "to_delete" => false,
-            'names' => [
-                "en" => "sda",
-                "de" => "sad",
-                "pl" => "",
-                "ru" => "",
-            ],
-        ],
-    ];
+    #[Validate(['nullable'])]
+    public $parameterValues = [];
 
     public function setParameter(): void
     {
         $names = $this->parameter->names;
         foreach ($names as $name) {
-            $this->parameterNames[$name->language] = $name->name;
+            $this->parameterNames[$name->language] = $name->name ?? '';
+        }
+
+        $values = $this->parameter->values;
+        foreach ($values as $value) {
+            $valueNames = [];
+            foreach ($value->names as $name) {
+                $valueNames[$name->language] = $name->name ?? '';
+            }
+
+            $this->parameterValues[] = [
+                'id' => $value->id,
+                'is_delete' => false,
+                'names' => $valueNames,
+            ];
         }
     }
 
@@ -47,7 +51,16 @@ class ParameterForm extends Form
         $this->validate();
 
         try {
-            $parameter = $this->createParameterWithNames();
+            DB::transaction(function () {
+                $parameterService = app(ParameterService::class);
+                $parameter        = $parameterService->createWithNames($this->parameterNames);
+
+                if (!empty($this->parameterValues)) {
+                    $parameterValuesService = app(ParameterValuesService::class);
+                    $values                 =
+                        $parameterValuesService->createWithNames($parameter->id, $this->parameterValues);
+                }
+            });
         } catch (Throwable $exception) {
             dd($exception->getMessage());
         }
@@ -56,26 +69,5 @@ class ParameterForm extends Form
     public function update(): void
     {
         $this->validate();
-    }
-
-    /**
-     * @throws Throwable
-     */
-    private function createParameterWithNames(): Parameter
-    {
-        return DB::transaction(function () {
-            $parameter = Parameter::query()
-                                  ->create();
-
-            $names = [];
-            foreach ($this->parameterNames as $language => $name) {
-                $names[] = ['language' => $language, 'name' => $name];
-            }
-
-            $parameter->names()
-                      ->createMany($names);
-
-            return $parameter;
-        });
     }
 }

@@ -42,6 +42,9 @@
                 </div>
             </div>
             <div class="flex flex-wrap gap-3 px-20">
+                @if(empty($this->form->parameterValues))
+                    <span class="text-zinc-400 italic">{{ __("no parameter values") }}</span>
+                @endif
                 @foreach($this->form->parameterValues as $parameterValues)
                     <div class="w-[250px] p-2 border rounded-md text-sm">
                         <div class="flex justify-between">
