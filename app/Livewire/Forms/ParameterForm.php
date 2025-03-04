@@ -7,9 +7,12 @@ use App\Models\ParameterValue;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
+use Throwable;
 
 class ParameterForm extends Form
 {
+    public ?Parameter $parameter;
+
     #[Validate([
         'parameterNames' => 'array|required',
         'parameterNames.en' => 'required',
@@ -17,10 +20,27 @@ class ParameterForm extends Form
     ])]
     public $parameterNames = [];
 
-    #[Validate([
-        'valueNames' => 'array|nullable',
-    ])]
-    public $valueNames = [[]];
+    #[Validate(['array|nullable'])]
+    public $parameterValues = [
+        [
+            "id" => null,
+            "to_delete" => false,
+            'names' => [
+                "en" => "sda",
+                "de" => "sad",
+                "pl" => "",
+                "ru" => "",
+            ],
+        ],
+    ];
+
+    public function setParameter(): void
+    {
+        $names = $this->parameter->names;
+        foreach ($names as $name) {
+            $this->parameterNames[$name->language] = $name->name;
+        }
+    }
 
     public function create(): void
     {
@@ -28,17 +48,19 @@ class ParameterForm extends Form
 
         try {
             $parameter = $this->createParameterWithNames();
-            $this->createValuesWithNames($parameter);
-        } catch (\Exception $exception) {
+        } catch (Throwable $exception) {
             dd($exception->getMessage());
         }
     }
 
-    public function update()
+    public function update(): void
     {
-
+        $this->validate();
     }
 
+    /**
+     * @throws Throwable
+     */
     private function createParameterWithNames(): Parameter
     {
         return DB::transaction(function () {
@@ -54,24 +76,6 @@ class ParameterForm extends Form
                       ->createMany($names);
 
             return $parameter;
-        });
-    }
-
-    private function createValuesWithNames(Parameter $parameter): void
-    {
-        DB::transaction(function () use ($parameter) {
-            foreach ($this->valueNames as $valueName) {
-                $value = ParameterValue::query()
-                                       ->create(['parameter_id' => $parameter->id]);
-
-                $names = [];
-                foreach ($valueName as $language => $name) {
-                    $names[] = ['language' => $language, 'name' => $name];
-                }
-
-                $value->names()
-                      ->createMany($names);
-            }
         });
     }
 }

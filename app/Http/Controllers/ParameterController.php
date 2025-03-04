@@ -11,6 +11,11 @@ class ParameterController extends Controller
         return view('parameter.list');
     }
 
+    public function edit(int $id): View
+    {
+        return view('parameter.edit', ['parameterId' => $id]);
+    }
+
     public function create(): View
     {
         return view('parameter.create');

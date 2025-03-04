@@ -6,5 +6,6 @@ return [
     'parameters' => [
         'index' => 'Parameters',
         'create' => 'Parameter create',
+        'edit' => 'Parameter edit'
     ],
 ];

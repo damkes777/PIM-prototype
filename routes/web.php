@@ -26,6 +26,8 @@ Route::middleware(['auth'])
                        ->name('parameters.list');
                   Route::get('/create', 'create')
                        ->name('parameters.create');
+                  Route::get('/edit/{id}', 'edit')
+                       ->name('parameters.edit');
               });
      });
 

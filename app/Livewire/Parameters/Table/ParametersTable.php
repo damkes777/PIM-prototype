@@ -59,6 +59,11 @@ class ParametersTable extends DataTableComponent
         $this->redirectRoute('parameters.create');
     }
 
+    public function edit(int $parameterId): void
+    {
+        $this->redirectRoute('parameters.edit', ['id' => $parameterId]);
+    }
+
     public function delete(int $parameterId): void
     {
         $parameter = Parameter::query()
