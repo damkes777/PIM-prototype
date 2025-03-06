@@ -23,7 +23,8 @@
                         <x-primary-button wire:click="translateParameterNames">
                             {{ __('Translate') }}
                         </x-primary-button>
-                        <div class="flex justify-center items-center ml-3 gap-2" wire:loading wire:target="translateParameterNames">
+                        <div class="flex justify-center items-center ml-3 gap-2" wire:loading
+                             wire:target="translateParameterNames">
                             <i class="fa-solid fa-spinner animate-spin"></i> {{ __('Translation...') }}
                         </div>
                     </div>
@@ -45,35 +46,43 @@
                 @if(empty($this->form->parameterValues))
                     <span class="text-zinc-400 italic">{{ __("no parameter values") }}</span>
                 @endif
-                @foreach($this->form->parameterValues as $key => $parameterValues)
-                    <div class="w-[250px] p-2 border rounded-md text-sm">
+                @foreach($this->form->parameterValues as $key => $parameterValue)
+                    <div @class(['opacity-50' => $parameterValue['to_delete'], 'w-[250px] p-2 border rounded-md text-sm'])>
                         <div class="flex justify-between">
                             <div class="flex items-center">
-                                @if(empty($parameterValues['id']))
+                                @if(empty($parameterValue['id']))
                                     <span class="font-semibold">{{ __('New') }}</span>
                                 @else
-                                    <span>{{ __('ID: ') . $parameterValues['id']}}</span>
+                                    <span>{{ __('ID: ') . $parameterValue['id']}}</span>
                                 @endif
                             </div>
                             <div class="flex gap-2">
                                 <button wire:click="editParameterValue({{ $key }})"
-                                        class="text-zinc-500/50 hover:text-zinc-800 p-1">
+                                        @class(['text-zinc-500/50 hover:text-zinc-800 p-1' => !$parameterValue['to_delete'], 'text-zinc-500/50 p-1' => $parameterValue['to_delete']])
+                                        @disabled($parameterValue['to_delete'])>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button class="text-zinc-500/50 hover:text-zinc-800 p-1">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
+                                @if ($parameterValue['to_delete'])
+                                    <button wire:click="undoParameterValue({{ $key }})"
+                                            class="text-zinc-500/50 hover:text-zinc-800 p-1">
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                    </button>
+                                @else
+                                    <button wire:click="removeParameterValue({{ $key }})"
+                                            class="text-zinc-500/50 hover:text-zinc-800 p-1">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                         <div class="mt-2">
                             <ul>
-                                @foreach($parameterValues['names'] as $lang => $name)
+                                @foreach($parameterValue['names'] as $lang => $name)
                                     <li class="break-words">
                                         <span class="font-semibold">{{ $this->getIsoName($lang) }}:</span>
                                         <span>{{ $name }}</span>
                                     </li>
                                 @endforeach
-
                             </ul>
                         </div>
                     </div>

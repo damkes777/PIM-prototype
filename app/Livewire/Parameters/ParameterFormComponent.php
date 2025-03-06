@@ -33,9 +33,19 @@ abstract class ParameterFormComponent extends Component
         $this->dispatch('openModal', component: 'modals.parameter-values.parameter-value-form-modal');
     }
 
+    public function undoParameterValue(int $key): void
+    {
+        $this->form->parameterValues[$key]['to_delete'] = false;
+    }
+
     public function removeParameterValue(int $key): void
     {
-        $this->form->parameterValues[$key]['to_delete'] = true;
+        if ($this->form->parameterValues[$key]['id'] === null) {
+            unset($this->form->parameterValues[$key]);
+            $this->form->parameterValues = array_values($this->form->parameterValues);
+        } else {
+            $this->form->parameterValues[$key]['to_delete'] = true;
+        }
     }
 
     public function editParameterValue(int $key): void

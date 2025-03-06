@@ -40,7 +40,7 @@ class ParameterForm extends Form
 
             $this->parameterValues[] = [
                 'id' => $value->id,
-                'is_delete' => false,
+                'to_delete' => false,
                 'names' => $valueNames,
             ];
         }
