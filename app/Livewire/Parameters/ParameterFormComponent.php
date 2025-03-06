@@ -30,7 +30,18 @@ abstract class ParameterFormComponent extends Component
 
     public function addParameterValue(): void
     {
-        $this->dispatch('openModal', component: 'modals.parameter-values.parameter-value-create-modal');
+        $this->dispatch('openModal', component: 'modals.parameter-values.parameter-value-form-modal');
+    }
+
+    public function removeParameterValue(int $key): void
+    {
+        $this->form->parameterValues[$key]['to_delete'] = true;
+    }
+
+    public function editParameterValue(int $key): void
+    {
+        $this->dispatch('openModal', component: 'modals.parameter-values.parameter-value-form-modal',
+            arguments: ['arrayKey' => $key, 'names' => $this->form->parameterValues[$key]['names']]);
     }
 
     /**
@@ -48,18 +59,22 @@ abstract class ParameterFormComponent extends Component
 
     public function getIsoName(string $lang): string
     {
-        return Languages::getFromIsoCode($lang)->isoName();
+        return Languages::getFromIsoCode($lang)
+                        ->isoName();
     }
 
     #[On('add-parameter-value')]
-    public function handleParameterValue(array $valueNames): void
+    public function handleParameterValue(array $valueNames, null|int $key): void
     {
-        $value = [
-            'id' => null,
-            'to_delete' => false,
-            'names' => $valueNames['valueNames'],
-        ];
-
-        $this->form->parameterValues[] = $value;
+        if ($key === null) {
+            $value                         = [
+                'id' => null,
+                'to_delete' => false,
+                'names' => $valueNames,
+            ];
+            $this->form->parameterValues[] = $value;
+        } else {
+            $this->form->parameterValues[$key]['names'] = $valueNames;
+        }
     }
 }

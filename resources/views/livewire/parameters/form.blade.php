@@ -45,7 +45,7 @@
                 @if(empty($this->form->parameterValues))
                     <span class="text-zinc-400 italic">{{ __("no parameter values") }}</span>
                 @endif
-                @foreach($this->form->parameterValues as $parameterValues)
+                @foreach($this->form->parameterValues as $key => $parameterValues)
                     <div class="w-[250px] p-2 border rounded-md text-sm">
                         <div class="flex justify-between">
                             <div class="flex items-center">
@@ -56,7 +56,8 @@
                                 @endif
                             </div>
                             <div class="flex gap-2">
-                                <button class="text-zinc-500/50 hover:text-zinc-800 p-1">
+                                <button wire:click="editParameterValue({{ $key }})"
+                                        class="text-zinc-500/50 hover:text-zinc-800 p-1">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 <button class="text-zinc-500/50 hover:text-zinc-800 p-1">

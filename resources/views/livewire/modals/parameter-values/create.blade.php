@@ -18,7 +18,7 @@
             {{ __('Cancel') }}
         </x-secondary-button>
         <x-primary-button wire:click="add">
-            {{ __('add') }}
+            {{ __('Submit') }}
         </x-primary-button>
     </x-slot:buttons>
 </x-wire-modal>
