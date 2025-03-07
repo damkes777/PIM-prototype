@@ -48,7 +48,7 @@ abstract class ParameterFormComponent extends Component
         }
     }
 
-    public function editParameterValue(int $key): void
+    public function openEditParameterValueModal(int $key): void
     {
         $this->dispatch('openModal', component: 'modals.parameter-values.parameter-value-form-modal',
             arguments: ['arrayKey' => $key, 'names' => $this->form->parameterValues[$key]['names']]);

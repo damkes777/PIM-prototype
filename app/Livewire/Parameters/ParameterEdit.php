@@ -16,6 +16,7 @@ class ParameterEdit extends ParameterFormComponent
 
     public function save(): void
     {
-        // TODO: Implement save() method.
+        $this->form->update();
+        $this->redirectRoute('parameters.list');
     }
 }

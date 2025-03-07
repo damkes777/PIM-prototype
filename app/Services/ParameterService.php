@@ -23,4 +23,20 @@ class ParameterService
             return $parameter;
         });
     }
+
+    /**
+     * @throws Throwable
+     */
+    public function updateNames(Parameter $parameter, array $names): Parameter
+    {
+        return DB::transaction(function () use ($parameter, $names) {
+            foreach ($names as $lang => $name) {
+                $parameter->names()
+                          ->where('language', $lang)
+                          ->update(['name' => $name]);
+            }
+
+            return $parameter;
+        });
+    }
 }

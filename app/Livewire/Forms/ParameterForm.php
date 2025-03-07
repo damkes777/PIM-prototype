@@ -57,17 +57,28 @@ class ParameterForm extends Form
 
                 if (!empty($this->parameterValues)) {
                     $parameterValuesService = app(ParameterValuesService::class);
-                    $values                 =
-                        $parameterValuesService->createWithNames($parameter->id, $this->parameterValues);
+                    $parameterValuesService->createWithNames($parameter->id, $this->parameterValues);
                 }
             });
         } catch (Throwable $exception) {
-            dd($exception->getMessage());
+
         }
     }
 
     public function update(): void
     {
         $this->validate();
+
+        try {
+            $parameterService = app(ParameterService::class);
+            $parameter        = $parameterService->updateNames($this->parameter, $this->parameterNames);
+
+            if (!empty($this->parameterValues)) {
+                $parameterValuesService = app(ParameterValuesService::class);
+                $parameterValuesService->updateOrCreateValuesWithNames($parameter->id, $this->parameterValues);
+            }
+        } catch (Throwable $exception) {
+            dd($exception->getMessage());
+        }
     }
 }

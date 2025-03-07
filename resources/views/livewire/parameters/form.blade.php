@@ -1,5 +1,4 @@
 <div class="flex flex-col w-4/5 mx-auto">
-    <form wire:submit="save">
         <div class="w-full border-t border-zinc-200">
             <div class="flex py-5 px-8">
                 <div class="w-1/2">
@@ -57,7 +56,7 @@
                                 @endif
                             </div>
                             <div class="flex gap-2">
-                                <button wire:click="editParameterValue({{ $key }})"
+                                <button wire:click="openEditParameterValueModal({{ $key }})"
                                         @class(['text-zinc-500/50 hover:text-zinc-800 p-1' => !$parameterValue['to_delete'], 'text-zinc-500/50 p-1' => $parameterValue['to_delete']])
                                         @disabled($parameterValue['to_delete'])>
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -91,7 +90,6 @@
         </div>
         <div class="inline-flex flex-row-reverse mt-5 gap-5">
             <x-secondary-button>{{ __('Cancel') }}</x-secondary-button>
-            <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
+            <x-primary-button wire:click="save">{{ __('Save') }}</x-primary-button>
         </div>
-    </form>
 </div>
