@@ -36,6 +36,8 @@ Route::middleware(['auth'])
               ->group(function () {
                   Route::get('/', 'list')
                        ->name('products.list');
+                  Route::get('/create', 'create')
+                       ->name('products.create');
               });
      });
 
