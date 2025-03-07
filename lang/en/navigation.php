@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'products' => 'Products',
     'categories' => 'Categories',
     'parameters' => [
         'index' => 'Parameters',

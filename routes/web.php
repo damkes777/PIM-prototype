@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ParameterController;
+use App\Http\Controllers\ProductController;
 
 Route::middleware(['auth'])
      ->group(function () {
@@ -28,6 +29,13 @@ Route::middleware(['auth'])
                        ->name('parameters.create');
                   Route::get('/edit/{id}', 'edit')
                        ->name('parameters.edit');
+              });
+
+         Route::controller(ProductController::class)
+              ->prefix('products')
+              ->group(function () {
+                  Route::get('/', 'list')
+                       ->name('products.list');
               });
      });
 
