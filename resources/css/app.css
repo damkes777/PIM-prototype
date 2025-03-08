@@ -1,4 +1,5 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import "@dasundev/livewire-dropzone-styles";
 
 @tailwind base;
 @tailwind components;

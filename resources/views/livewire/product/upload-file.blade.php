@@ -3,9 +3,9 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public function openUploadFileModal()
+    public function openUploadFileModal(): void
     {
-        //
+        $this->dispatch('openModal', component: 'modals.product.product-file-upload-modal');
     }
 }
 

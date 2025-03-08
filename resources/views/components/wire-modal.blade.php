@@ -1,11 +1,11 @@
 <div>
-    <div class="flex p-2 justify-between bg-zinc-200/50">
-        <h2 class="p-1 ml-2 text-center font-medium text-zinc-600">
+    <div class="flex p-2 justify-between">
+        <h2 class="p-1 ml-2 text-sm text-center content-center font-medium text-zinc-400">
             {{ $title ?? '' }}
         </h2>
         <button wire:click="dispatch('closeModal')"
-                class="text-zinc-600 p-1 mr-2">
-            <i class="fa-solid fa-xmark"></i>
+                class="text-zinc-600 py-1 px-2 mr-2">
+            <i class="fa-solid fa-xmark text-sm"></i>
         </button>
     </div>
     <div class="flex p-5">
