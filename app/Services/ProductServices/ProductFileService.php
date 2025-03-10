@@ -47,6 +47,6 @@ class ProductFileService
     public function downloadFile(string $fileName): StreamedResponse
     {
         return Storage::disk('public')
-                      ->download('products/' . $fileName);
+                      ->download(path: 'products/' . $fileName, name: $fileName);
     }
 }
