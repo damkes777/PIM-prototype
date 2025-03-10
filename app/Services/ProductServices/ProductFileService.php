@@ -41,12 +41,12 @@ class ProductFileService
     public function saveFile(string $xml, string $fileName): bool
     {
         return Storage::disk('public')
-                      ->put('products' . $fileName, $xml);
+                      ->put('products/' . $fileName, $xml);
     }
 
     public function downloadFile(string $fileName): StreamedResponse
     {
         return Storage::disk('public')
-                      ->download(path: 'products/' . $fileName, name: $fileName);
+                      ->download(path: 'products/' . $fileName);
     }
 }

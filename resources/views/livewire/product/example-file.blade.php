@@ -9,6 +9,10 @@ new class extends Component {
         $service  = app(ProductFileService::class);
         $fileName = $service->createExampleFile();
 
+        if (empty($fileName)) {
+            return null;
+        }
+
         return $service->downloadFile($fileName);
     }
 }
