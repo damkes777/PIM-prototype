@@ -17,7 +17,7 @@
                     @if($file->is_processing)
                         <span class="content-center"><i class="fa-solid fa-spinner animate-spin"></i></span>
                     @else
-                        <button class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-play"></i></button>
+                        <button wire:click="processFile({{$file}})" class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-play"></i></button>
                     @endif
                     <button wire:click="delete({{ $file }})"  class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-trash"></i></button>
                 </div>

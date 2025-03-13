@@ -41,6 +41,11 @@ class ProductFileService
         }
     }
 
+    public function getFile(string $path): ?string
+    {
+        return Storage::disk('public')->get($path);
+    }
+
     public function storeFile(array $file)
     {
         $fileUuid = Str::uuid();

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Product;
 
+use App\Jobs\ProcessProductFileJob;
 use App\Models\ProductFile;
 use App\Services\ProductServices\ProductFileService;
 use Illuminate\View\View;
@@ -33,6 +34,16 @@ class ProductFilesList extends Component
     {
         $service = app(ProductFileService::class);
         $service->deleteFile($productFile);
+    }
+
+    public function processFile(ProductFile $productFile): void
+    {
+        $productFile->is_processing = true;
+        $productFile->save();
+
+        ProcessProductFileJob::dispatch($productFile);
+
+        $this->dispatch('refresh');
     }
 
     #[On('add-new-file')]
