@@ -16,6 +16,9 @@
 
                         <livewire:product.example-file />
                     </div>
+                    <div class="w-full mt-8">
+                        <livewire:product.product-files-list />
+                    </div>
                 </div>
             </div>
         </div>
