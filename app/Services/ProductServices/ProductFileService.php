@@ -47,12 +47,20 @@ class ProductFileService
 
         $this->moveFile($file, $fileUuid);
 
-        return ProductFile::query()->create([
-           'uuid' => $fileUuid,
-           'name' => $file['name'],
-           'path' => 'products/' . $fileUuid . '/' . $file['name'],
-        ]);
+        return ProductFile::query()
+                          ->create([
+                              'uuid' => $fileUuid,
+                              'name' => $file['name'],
+                              'path' => 'products/' . $fileUuid . '/' . $file['name'],
+                          ]);
+    }
 
+    public function deleteFile(ProductFile $productFile): void
+    {
+        Storage::disk('public')
+               ->delete($productFile->path);
+
+        $productFile->delete();
     }
 
     public function saveFile(string $xml, string $fileName): bool

@@ -19,7 +19,7 @@
                     @else
                         <button class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-play"></i></button>
                     @endif
-                    <button class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-trash"></i></button>
+                    <button wire:click="delete({{ $file }})"  class="text-zinc-500 hover:text-zinc-700 p-1"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>
         @endforeach

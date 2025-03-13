@@ -23,12 +23,13 @@ class ProductFileUploadModal extends ModalComponent
         //
     }
 
-    public function submit()
+    public function submit(): void
     {
         $service = app(ProductFileService::class);
 
         try {
             $service->storeFile($this->file[0]);
+            $this->dispatch('add-new-file');
             $this->dispatch('closeModal');
         } catch (\Throwable $exception) {
             debug($exception->getMessage());
