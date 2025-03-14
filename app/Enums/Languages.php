@@ -13,7 +13,7 @@ enum Languages
     {
         return match ($this) {
             self::ENGLISH => 'English',
-            self::GERMANY => 'Germany',
+            self::GERMANY => 'German',
             self::POLISH => 'Polish',
             self::RUSSIAN => 'Russian'
         };
