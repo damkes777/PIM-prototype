@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -23,6 +24,17 @@ class Product extends Model
         'brand',
         'file_id',
     ];
+
+    public function englishName(): Attribute
+    {
+        return Attribute::make(get: function () {
+            $productName = $this->names()
+                                ->where(['language' => 'en'])
+                                ->first();
+
+            return $productName->name;
+        });
+    }
 
     public function file(): HasOne
     {

@@ -12,12 +12,15 @@
                     <div class="flex justify-between px-24">
                         <livewire:product.form-card/>
 
-                        <livewire:product.upload-file />
+                        <livewire:product.upload-file/>
 
-                        <livewire:product.example-file />
+                        <livewire:product.example-file/>
                     </div>
-                    <div class="w-full mt-8">
-                        <livewire:product.product-files-list />
+                    <div class="mt-20">
+                        <livewire:product.products-table/>
+                    </div>
+                    <div class="w-full mt-20">
+                        <livewire:product.product-files-list/>
                     </div>
                 </div>
             </div>
