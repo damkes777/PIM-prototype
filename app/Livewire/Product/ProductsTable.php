@@ -32,11 +32,14 @@ class ProductsTable extends DataTableComponent
             Column::make(__('Price'))
                   ->label(fn($row, Column $column) => $row->prices()
                                                           ->where('currency', '=', 'usd')
-                                                          ->first()->price),
+                                                          ->first()->price)
+                  ->sortable(),
             Column::make(__('Currency'))
                   ->label(fn($row, Column $column) => $row->prices()
                                                           ->where('currency', '=', 'usd')
                                                           ->first()->currency),
+            Column::make(__('Quantity'), 'quantity')
+                  ->sortable(),
             Column::make(__('SKU'), 'sku'),
             Column::make(__('EAN'), 'ean'),
             Column::make(__('Names'))
@@ -44,5 +47,17 @@ class ProductsTable extends DataTableComponent
             Column::make(__('Actions'))
                   ->label(fn($row, Column $column) => view('livewire.product.table.actions')->withRow($row)),
         ];
+    }
+
+    public function edit(int $productId): void
+    {
+        $this->redirectRoute('products.edit', ['id' => $productId]);
+    }
+
+    public function delete(int $productId): void
+    {
+        $product = Product::query()
+                          ->find($productId);
+        $product->delete();
     }
 }

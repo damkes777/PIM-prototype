@@ -9,10 +9,12 @@ Route::middleware(['auth'])
      ->group(function () {
          Route::view('/', 'dashboard')
               ->name('dashboard');
-
          Route::view('profile', 'profile')
               ->name('profile');
 
+         /*
+          * Category routes
+          */
          Route::controller(CategoryController::class)
               ->prefix('categories')
               ->group(function () {
@@ -20,6 +22,9 @@ Route::middleware(['auth'])
                        ->name('categories.list');
               });
 
+         /*
+          * Parameter routes
+          */
          Route::controller(ParameterController::class)
               ->prefix('parameters')
               ->group(function () {
@@ -31,6 +36,9 @@ Route::middleware(['auth'])
                        ->name('parameters.edit');
               });
 
+         /*
+          * Product routes
+          */
          Route::controller(ProductController::class)
               ->prefix('products')
               ->group(function () {
@@ -38,6 +46,8 @@ Route::middleware(['auth'])
                        ->name('products.list');
                   Route::get('/create', 'create')
                        ->name('products.create');
+                  Route::get('/edit/{id}', 'edit')
+                       ->name('products.edit');
               });
      });
 
