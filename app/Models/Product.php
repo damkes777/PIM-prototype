@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $ean
  * @property int $quantity
  * @property string $brand
+ * @property int $category_id
  * @property int $file_id
  */
 class Product extends Model
@@ -22,6 +24,7 @@ class Product extends Model
         'ean',
         'quantity',
         'brand',
+        'category_id',
         'file_id',
     ];
 
@@ -49,5 +52,15 @@ class Product extends Model
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class, 'product_id', 'id');
+    }
+
+    public function parameters(): BelongsToMany
+    {
+        return $this->belongsToMany(Parameter::class, 'products_parameters', 'parameter_id', 'product_id');
+    }
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(Category::class, 'category_id', 'id');
     }
 }

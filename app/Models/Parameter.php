@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -23,6 +24,11 @@ class Parameter extends Model
     public function values(): HasMany
     {
         return $this->hasMany(ParameterValue::class, 'parameter_id', 'id');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'products_parameters', 'product_id', 'parameter_id');
     }
 
     public function englishName(): Attribute

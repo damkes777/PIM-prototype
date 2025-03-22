@@ -46,6 +46,12 @@ class ProductsTable extends DataTableComponent
                   ->label(fn($row, Column $column) => view('livewire.product.table.names')->withRow($row)),
             Column::make(__('Actions'))
                   ->label(fn($row, Column $column) => view('livewire.product.table.actions')->withRow($row)),
+            Column::make('Category')
+                  ->label(fn($row, Column $column) => view('livewire.product.table.category')->withRow($row))
+                  ->collapseAlways(),
+            Column::make('Parameters')
+                  ->label(fn($row, Column $column) => view('livewire.product.table.parameters')->withRow($row))
+                  ->collapseAlways(),
         ];
     }
 
@@ -59,5 +65,17 @@ class ProductsTable extends DataTableComponent
         $product = Product::query()
                           ->find($productId);
         $product->delete();
+    }
+
+    public function hasCategory(Product $product): bool
+    {
+        return $product->category()
+                       ->exists();
+    }
+
+    public function hasParameters(Product $product): bool
+    {
+        return $product->parameters()
+                       ->exists();
     }
 }
