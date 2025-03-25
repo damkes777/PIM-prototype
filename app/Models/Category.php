@@ -31,9 +31,9 @@ class Category extends Model
         return $this->hasMany(CategoryName::class, 'category_id', 'id');
     }
 
-    public function product(): BelongsTo
+    public function products(): HasMany
     {
-        return $this->belongsTo(Product::class,'category_id', 'product_id');
+        return $this->hasMany(Product::class,'category_id', 'id');
     }
 
     public function englishName(): Attribute

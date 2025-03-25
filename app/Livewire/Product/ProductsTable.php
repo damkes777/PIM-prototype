@@ -3,6 +3,7 @@
 namespace App\Livewire\Product;
 
 use App\Models\Product;
+use App\Services\CategoryService;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -46,8 +47,8 @@ class ProductsTable extends DataTableComponent
                   ->label(fn($row, Column $column) => view('livewire.product.table.names')->withRow($row)),
             Column::make(__('Actions'))
                   ->label(fn($row, Column $column) => view('livewire.product.table.actions')->withRow($row)),
-            Column::make('Category')
-                  ->label(fn($row, Column $column) => view('livewire.product.table.category')->withRow($row))
+            Column::make('Category', 'category_id')->view('livewire.product.table.category')
+                  // ->label(fn($row, Column $column) => view('livewire.product.table.category')->withRow($row))
                   ->collapseAlways(),
             Column::make('Parameters')
                   ->label(fn($row, Column $column) => view('livewire.product.table.parameters')->withRow($row))
@@ -69,8 +70,7 @@ class ProductsTable extends DataTableComponent
 
     public function hasCategory(Product $product): bool
     {
-        return $product->category()
-                       ->exists();
+        return $product->category_id !== null;
     }
 
     public function hasParameters(Product $product): bool
@@ -87,5 +87,12 @@ class ProductsTable extends DataTableComponent
     public function assignParameters(int $id): void
     {
         $this->redirectRoute('products.assignParameters', ['id' => $id]);
+    }
+
+    public function getCategoryPath(int $categoryId): string
+    {
+        $service = app(CategoryService::class);
+
+        return $service->getPath($categoryId);
     }
 }

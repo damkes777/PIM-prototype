@@ -56,4 +56,17 @@ class CategoryService
 
         return null;
     }
+
+    public function getPath(int $id): string
+    {
+        $category = $this->findCategory($id);
+        $path     = $category->english_name;
+
+        while ($category->parent_id !== null) {
+            $category = $this->findCategory($category->parent_id);
+            $path     = $category->english_name . '/' . $path;
+        }
+
+        return $path;
+    }
 }
