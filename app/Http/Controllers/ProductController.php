@@ -36,10 +36,10 @@ class ProductController extends Controller
         return view('product.assign-category', ['product' => $product]);
     }
 
-    public function assignParameter(int $id): View
+    public function assignParameters(int $id): View
     {
         $product = $this->productService->find($id);
 
-        return view('product.assign-parameter', ['product' => $product]);
+        return view('product.assign-parameters', ['product' => $product]);
     }
 }

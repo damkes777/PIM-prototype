@@ -78,4 +78,14 @@ class ProductsTable extends DataTableComponent
         return $product->parameters()
                        ->exists();
     }
+
+    public function assignCategory(int $id): void
+    {
+        $this->redirectRoute('products.assignCategory', ['id' => $id]);
+    }
+
+    public function assignParameters(int $id): void
+    {
+        $this->redirectRoute('products.assignParameters', ['id' => $id]);
+    }
 }
