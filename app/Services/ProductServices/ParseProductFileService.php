@@ -30,7 +30,7 @@ class ParseProductFileService
         $reader = XmlReader::fromString($file);
         $values = $reader->values();
 
-        foreach ($values['products'] as $product) {
+        foreach ($values['products']['product'] as $product) {
             $this->productService->createOrUpdate($product, $productFile->id);
         }
     }
