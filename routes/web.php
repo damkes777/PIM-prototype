@@ -48,6 +48,10 @@ Route::middleware(['auth'])
                        ->name('products.create');
                   Route::get('/edit/{id}', 'edit')
                        ->name('products.edit');
+                  Route::get('/{id}/assignParameter', 'assignParameter')
+                       ->name('products.assignParameter');
+                  Route::get('/{id}/assignCategory', 'assignCategory')
+                       ->name('products.assignCategory');
               });
      });
 

@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Livewire\Product;
+namespace App\Services\ProductServices;
 
 use App\Models\Product;
 
 class ProductService
 {
+    public function find(int $id): Product
+    {
+        return Product::query()->find($id);
+    }
+
     public function createOrUpdate(array $productData, int $fileId): Product
     {
         $product = Product::query()

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Livewire\Product;
+namespace App\Services\ProductServices;
 
 use App\Exceptions\ParseProductFileException;
 use App\Models\ProductFile;
-use App\Services\ProductServices\ProductFileService;
 use Saloon\XmlWrangler\XmlReader;
 use Throwable;
 

@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Livewire\Product\ParseProductFileService;
 use App\Models\ProductFile;
+use App\Services\ProductServices\ParseProductFileService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
