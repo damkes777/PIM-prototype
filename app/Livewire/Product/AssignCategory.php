@@ -22,6 +22,13 @@ class AssignCategory extends Component
     #[Validate('required|integer')]
     public $selectedCategory = null;
 
+    public function mount(): void
+    {
+        if ($this->product->category()->exists()) {
+            $this->selectedCategory = $this->product->category_id;
+        }
+    }
+
     public function render(): View
     {
         return view('livewire.product.assign-category', ['categories' => $this->getCategories()]);
