@@ -50,8 +50,8 @@ class ProductsTable extends DataTableComponent
             Column::make('Category', 'category_id')
                   ->view('livewire.product.table.category')
                   ->collapseAlways(),
-            Column::make('Parameters')
-                  ->label(fn($row, Column $column) => view('livewire.product.table.parameters')->withRow($row))
+            Column::make('Parameters', 'parameters')
+                  ->view('livewire.product.table.parameters')
                   ->collapseAlways(),
         ];
     }
@@ -76,7 +76,13 @@ class ProductsTable extends DataTableComponent
 
     public function hasParameters(Product $product): bool
     {
-        return (bool)$product->parameters;
+        if ($product->parameters === null) {
+            return false;
+        }
+
+        $parameters = unserialize($product->parameters);
+
+        return !empty($parameters);
     }
 
     public function assignCategory(int $id): void
