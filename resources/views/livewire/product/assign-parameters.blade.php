@@ -1,5 +1,6 @@
 <div>
     <div class="flex flex-col gap-3">
+        <div class="mb-8 text-lg font-semibold">{{ $product->english_name }}</div>
         <div class="flex items-center">
             <x-text-input wire:model.live.debounce.500ms="search" placeholder="{{ __('search') }}"/>
         </div>

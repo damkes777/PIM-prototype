@@ -76,8 +76,7 @@ class ProductsTable extends DataTableComponent
 
     public function hasParameters(Product $product): bool
     {
-        return $product->parameters()
-                       ->exists();
+        return (bool)$product->parameters;
     }
 
     public function assignCategory(int $id): void

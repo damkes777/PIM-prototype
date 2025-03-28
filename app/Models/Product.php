@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $ean
  * @property int $quantity
  * @property string $brand
+ * @property string $parameters
  * @property int $category_id
  * @property int $file_id
  */
@@ -25,6 +26,7 @@ class Product extends Model
         'ean',
         'quantity',
         'brand',
+        'parameters',
         'category_id',
         'file_id',
     ];
@@ -53,11 +55,6 @@ class Product extends Model
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class, 'product_id', 'id');
-    }
-
-    public function parameters(): BelongsToMany
-    {
-        return $this->belongsToMany(Parameter::class, 'products_parameters', 'parameter_id', 'product_id');
     }
 
     public function category(): BelongsTo
