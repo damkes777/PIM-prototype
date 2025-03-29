@@ -101,4 +101,10 @@ class ProductsTable extends DataTableComponent
 
         return $service->getPath($categoryId);
     }
+
+    public function showProductParameters(int $productId): void
+    {
+        $this->dispatch('openModal', component: 'modals.product.product-parameters-modal',
+            arguments: ['productId' => $productId]);
+    }
 }
