@@ -52,6 +52,8 @@ Route::middleware(['auth'])
                        ->name('products.assignParameters');
                   Route::get('/{id}/assignCategory', 'assignCategory')
                        ->name('products.assignCategory');
+                  Route::get('{id}/description', 'description')
+                       ->name('products.description');
               });
      });
 

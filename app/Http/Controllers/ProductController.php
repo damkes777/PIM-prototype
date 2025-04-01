@@ -42,4 +42,11 @@ class ProductController extends Controller
 
         return view('product.assign-parameters', ['product' => $product]);
     }
+
+    public function description(int $id): View
+    {
+        $product = $this->productService->find($id);
+
+        return view('product.description', ['product' => $product]);
+    }
 }

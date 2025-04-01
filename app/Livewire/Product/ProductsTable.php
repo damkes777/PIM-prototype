@@ -53,6 +53,7 @@ class ProductsTable extends DataTableComponent
             Column::make('Parameters', 'parameters')
                   ->view('livewire.product.table.parameters')
                   ->collapseAlways(),
+            Column::make('Description', 'id')->view('livewire.product.table.description')->collapseAlways(),
         ];
     }
 
@@ -106,5 +107,10 @@ class ProductsTable extends DataTableComponent
     {
         $this->dispatch('openModal', component: 'modals.product.product-parameters-modal',
             arguments: ['productId' => $productId]);
+    }
+
+    public function description(int $productId): Void
+    {
+        $this->redirectRoute('products.description', ['id' => $productId]);
     }
 }
