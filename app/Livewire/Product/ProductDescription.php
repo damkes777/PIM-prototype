@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Product;
 
+use App\Enums\Languages;
 use App\Models\Product;
 use App\Services\GenerateServices\GenerateProductDescriptionService;
 use GuzzleHttp\Exception\GuzzleException;
@@ -13,7 +14,15 @@ class ProductDescription extends Component
 {
     public Product $product;
 
-    public $description;
+    public $targetLanguage = 'en';
+    public $descriptions = [];
+
+    public function mount(): void
+    {
+        foreach ($this->getLanguages() as $language) {
+            $this->descriptions[$language->isoCode()] = '';
+        }
+    }
 
     public function render(): View
     {
@@ -28,7 +37,7 @@ class ProductDescription extends Component
     {
         $service = app(GenerateProductDescriptionService::class);
 
-        $this->description = $service->generate($this->product);
+        $this->descriptions['en'] = $service->generate($this->product);
     }
 
     public function hasParameters(): bool
@@ -56,5 +65,20 @@ class ProductDescription extends Component
     public function assignParameters(): void
     {
         $this->redirectRoute('products.assignParameters', ['id' => $this->product->id]);
+    }
+
+    public function getLanguages(): array
+    {
+        return Languages::cases();
+    }
+
+    public function changeTargetLanguage($targetLanguage): void
+    {
+        $this->targetLanguage = $targetLanguage;
+    }
+
+    public function isTargetLanguage(string $targetLanguage): bool
+    {
+        return $this->targetLanguage === $targetLanguage;
     }
 }
