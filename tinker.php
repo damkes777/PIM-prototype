@@ -1,9 +1,6 @@
 <?php
 
-use App\Facades\PriceHelper;
+$product = \App\Models\Product::find(1);
+$service = app(\App\Services\GenerateServices\GenerateProductDescriptionService::class);
 
-$price = PriceHelper::castToInt('1.234,56'); // 123456
-dump($price);
-
-$price = PriceHelper::castToString($price);
-dump($price);
+dd($service->generate($product));

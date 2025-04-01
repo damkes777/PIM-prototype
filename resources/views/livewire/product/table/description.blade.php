@@ -1,3 +1,3 @@
 <x-secondary-button wire:click="description({{ $row->id }})">
-    Create
+    {{ __('Create') }}
 </x-secondary-button>
