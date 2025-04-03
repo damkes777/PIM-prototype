@@ -16,7 +16,7 @@ return [
                     'type' => 'string',
                     'description' => 'The target language for translation',
                 ],
-                'translated_word' => [
+                'translated_sentence' => [
                     'type' => 'string',
                     'description' => 'The translated sentence',
                 ],

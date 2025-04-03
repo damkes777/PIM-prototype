@@ -28,7 +28,7 @@ class TranslateService implements Translatable
             $response = $this->openAIService->executeRequest($message, $schema);
             $result   = $response->getResult();
 
-            return $result['translated_word'];
+            return $result['translated_sentence'];
         } catch (\Exception $exception) {
             return '';
         }

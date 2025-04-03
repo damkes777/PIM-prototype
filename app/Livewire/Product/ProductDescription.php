@@ -30,6 +30,16 @@ class ProductDescription extends Component
         return view('livewire.product.product-description');
     }
 
+    public function save(): void
+    {
+        foreach ($this->descriptions as $language => $description) {
+            $this->product->descriptions()
+                          ->create(['language' => $language, 'description' => $description]);
+        }
+
+        $this->redirectRoute('products.list');
+    }
+
     /**
      * @throws GuzzleException
      * @throws JsonException
