@@ -5,6 +5,7 @@ namespace App\Livewire\Product;
 use App\Enums\Languages;
 use App\Models\Product;
 use App\Services\GenerateServices\GenerateProductDescriptionService;
+use App\Services\TranslateServices\TranslateService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\View\View;
 use JsonException;
@@ -80,5 +81,21 @@ class ProductDescription extends Component
     public function isTargetLanguage(string $targetLanguage): bool
     {
         return $this->targetLanguage === $targetLanguage;
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function translate(): void
+    {
+        $service = app(TranslateService::class);
+
+        foreach ($this->getLanguages() as $language) {
+            if ($language->isoCode() === 'en') {
+                continue;
+            }
+            $this->descriptions[$language->isoCode()] =
+                $service->translate($this->descriptions['en'], $language->isoCode());
+        }
     }
 }

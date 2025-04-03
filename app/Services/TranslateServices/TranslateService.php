@@ -8,8 +8,8 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class TranslateService implements Translatable
 {
-    private const SYSTEM_PROMPT = 'You translate the given word into the following language: ';
-    private const USER_PROMPT = 'Translate the word: ';
+    private const SYSTEM_PROMPT = 'You translate the given sentence into the following language: ';
+    private const USER_PROMPT = 'Translate the sentence: ';
 
     public function __construct(
         protected OpenAIService $openAIService

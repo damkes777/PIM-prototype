@@ -25,16 +25,31 @@
                 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                               placeholder="Write a description..." required></textarea>
                 </div>
-                <div class="flex items-center px-3 py-2 border-t dark:border-gray-600 border-gray-200">
-                    <div>
-                        <x-secondary-button wire:click="generateDescription">
-                            {{ __('Generate description') }}
-                        </x-secondary-button>
+                <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600 border-gray-200">
+                    <div class="flex">
+                        <div>
+                            <x-secondary-button wire:click="generateDescription">
+                                {{ __('Generate description') }}
+                            </x-secondary-button>
+                        </div>
+                        <div wire:loading wire:target="generateDescription" class="flex justify-center items-center ml-3 gap-2">
+                            <i class="fa-solid fa-spinner animate-spin"></i> {{ __('generation...') }}
+                        </div>
                     </div>
-                    <div wire:loading wire:target="generateDescription" class="flex justify-center items-center ml-3 gap-2">
-                        <i class="fa-solid fa-spinner animate-spin"></i> {{ __('generation...') }}
+                    <div>
+                        @if(!empty($this->descriptions['en']))
+                            <span wire:loading wire:target="translate">{{ __('Translate...') }}</span>
+                            <x-secondary-button wire:click="translate">
+                                {{ __('Translate') }}
+                            </x-secondary-button>
+                        @endif
                     </div>
                 </div>
+            </div>
+            <div class="flex flex-row-reverse">
+                <x-primary-button>
+                    {{ __('Save') }}
+                </x-primary-button>
             </div>
         </form>
     @else

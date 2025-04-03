@@ -3,14 +3,14 @@
 return [
     'type' => 'json_schema',
     'json_schema' => [
-        'name' => 'single_word_translation',
-        'description' => 'Translated word to a specific language',
+        'name' => 'single_sentence_translation',
+        'description' => 'Translated sentence to a specific language',
         'schema' => [
             'type' => 'object',
             'properties' => [
-                'input_word' => [
+                'input_sentence' => [
                     'type' => 'string',
-                    'description' => 'The word to be translated',
+                    'description' => 'The sentence to be translated',
                 ],
                 'target_language' => [
                     'type' => 'string',
@@ -18,10 +18,10 @@ return [
                 ],
                 'translated_word' => [
                     'type' => 'string',
-                    'description' => 'The translated word',
+                    'description' => 'The translated sentence',
                 ],
             ],
-            'required' => ['input_word', 'target_language', 'translated_word'],
+            'required' => ['input_sentence', 'target_language', 'translated_sentence'],
         ],
     ],
 ];
