@@ -33,6 +33,10 @@ class ProductDescription extends Component
     public function save(): void
     {
         foreach ($this->descriptions as $language => $description) {
+            if (empty($description)) {
+                continue;
+            }
+
             $this->product->descriptions()
                           ->create(['language' => $language, 'description' => $description]);
         }
