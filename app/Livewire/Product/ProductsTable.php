@@ -53,7 +53,9 @@ class ProductsTable extends DataTableComponent
             Column::make('Parameters', 'parameters')
                   ->view('livewire.product.table.parameters')
                   ->collapseAlways(),
-            Column::make('Description', 'id')->view('livewire.product.table.description')->collapseAlways(),
+            Column::make('Description', 'id')
+                  ->view('livewire.product.table.description')
+                  ->collapseAlways(),
         ];
     }
 
@@ -109,8 +111,14 @@ class ProductsTable extends DataTableComponent
             arguments: ['productId' => $productId]);
     }
 
-    public function description(int $productId): Void
+    public function description(int $productId): void
     {
         $this->redirectRoute('products.description', ['id' => $productId]);
+    }
+
+    public function productHasDescription(Product $product): bool
+    {
+        return $product->descriptions()
+                       ->exists();
     }
 }

@@ -20,8 +20,17 @@ class ProductDescription extends Component
 
     public function mount(): void
     {
-        foreach ($this->getLanguages() as $language) {
-            $this->descriptions[$language->isoCode()] = '';
+        if ($this->product->descriptions()
+                          ->exists()) {
+            foreach ($this->getLanguages() as $language) {
+                $this->descriptions[$language->isoCode()] = $this->product->descriptions()
+                                                                          ->where('language', $language->isoCode())
+                                                                          ->first()->description;
+            }
+        } else {
+            foreach ($this->getLanguages() as $language) {
+                $this->descriptions[$language->isoCode()] = '';
+            }
         }
     }
 
